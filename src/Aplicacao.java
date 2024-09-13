@@ -86,6 +86,7 @@ public class Aplicacao {
         System.out.println("5 - Quick Sort");
         System.out.println("6 - Merge Sort");
         System.out.println("7 - Shell Sort");
+        System.out.println("8 - ShakeSort");
         System.out.println("9 - Todos");
         System.out.println("0 - Voltar");
 
@@ -133,8 +134,8 @@ public class Aplicacao {
                 nomeMetodo = "InsercaoDireta";
                 InsercaoDireta insercaoDireta = new InsercaoDireta(exibirArray, tempoSimulacao);
 
-                insercaoDireta.ordenar(arrayAleatorio.clone());
-                resultadosAleatorio = insercaoDireta.getTrocas() + "/" + insercaoDireta.getComparacoes();
+                // insercaoDireta.ordenar(arrayAleatorio.clone());
+                // resultadosAleatorio = insercaoDireta.getTrocas() + "/" + insercaoDireta.getComparacoes();
 
                 insercaoDireta.ordenar(arrayCrescente);
                 resultadosCrescente = insercaoDireta.getTrocas() + "/" + insercaoDireta.getComparacoes();
@@ -212,6 +213,21 @@ public class Aplicacao {
                 shellSort.ordenar(arrayDecrescente);
                 resultadosDecrescente = shellSort.getTrocas() + "/" + shellSort.getComparacoes();
                 break;
+
+            case 8:
+                nomeMetodo = "ShakeSort";
+                ShakeSort shakesort = new ShakeSort(exibirArray, tempoSimulacao);
+
+                shakesort.ordenar(arrayAleatorio.clone());
+                resultadosAleatorio = shakesort.getTrocas() + "/" + shakesort.getComparacoes();
+
+                shakesort.ordenar(arrayCrescente);
+                resultadosCrescente = shakesort.getTrocas() + "/" + shakesort.getComparacoes();
+
+                shakesort.ordenar(arrayDecrescente);
+                resultadosDecrescente = shakesort.getTrocas() + "/" + shakesort.getComparacoes();
+                break;
+
             case 9:
 
                 nomeMetodo = "BubbleSort";
@@ -309,6 +325,20 @@ public class Aplicacao {
 
                 shellSort.ordenar(arrayDecrescente);
                 resultadosDecrescente = shellSort.getTrocas() + "/" + shellSort.getComparacoes();
+
+
+
+                nomeMetodo = "ShakeSort";
+                shakesort = new ShakeSort(exibirArray, tempoSimulacao);
+
+                shakesort.ordenar(arrayAleatorio.clone());
+                resultadosAleatorio = shakesort.getTrocas() + "/" + shakesort.getComparacoes();
+
+                shakesort.ordenar(arrayCrescente);
+                resultadosCrescente = shakesort.getTrocas() + "/" + shakesort.getComparacoes();
+
+                shakesort.ordenar(arrayDecrescente);
+                resultadosDecrescente = shakesort.getTrocas() + "/" + shakesort.getComparacoes();
                 break;
 
             default:
