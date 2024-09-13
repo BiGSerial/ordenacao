@@ -48,11 +48,11 @@ public class ShellSort {
 
                
                 array[j] = temp;
-                trocas++;
+                // trocas++;
 
                 i++;
             }
-            
+
             gap /= 2;
         }
         return array;

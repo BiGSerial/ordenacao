@@ -24,7 +24,7 @@ public class QuickSort {
 
     private void quickSort(int[] array, int low, int high) {
        
-        comparacoes++;
+       //comparacoes++;
         if (low < high) {
             int pi = partition(array, low, high);
             quickSort(array, low, pi - 1);
