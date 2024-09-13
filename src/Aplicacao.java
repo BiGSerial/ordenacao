@@ -11,6 +11,7 @@ public class Aplicacao {
     private static int quantidadeRegistros = 0; // Quantidade de registros
     private static Scanner scanner = new Scanner(System.in); // Scanner global
     private static String arquivoRelatorioAtual = null; // Caminho do arquivo de relatório atual
+    private static boolean cabecalhoEscrito = false; // Controla se o cabeçalho já foi escrito
 
     public static void main(String[] args) {
         while (true) {
@@ -85,6 +86,7 @@ public class Aplicacao {
         System.out.println("5 - Quick Sort");
         System.out.println("6 - Merge Sort");
         System.out.println("7 - Shell Sort");
+        System.out.println("9 - Todos");
         System.out.println("0 - Voltar");
 
         System.out.print("\nEscolha o método de ordenação: ");
@@ -210,6 +212,104 @@ public class Aplicacao {
                 shellSort.ordenar(arrayDecrescente);
                 resultadosDecrescente = shellSort.getTrocas() + "/" + shellSort.getComparacoes();
                 break;
+            case 9:
+
+                nomeMetodo = "BubbleSort";
+                bubbleSort = new BubbleSort(exibirArray, tempoSimulacao);
+
+                bubbleSort.ordenar(arrayAleatorio.clone());
+                resultadosAleatorio = bubbleSort.getTrocas() + "/" + bubbleSort.getComparacoes();
+
+                bubbleSort.ordenar(arrayCrescente);
+                resultadosCrescente = bubbleSort.getTrocas() + "/" + bubbleSort.getComparacoes();
+
+                bubbleSort.ordenar(arrayDecrescente);
+                resultadosDecrescente = bubbleSort.getTrocas() + "/" + bubbleSort.getComparacoes();
+
+                gerarRelatorio(nomeMetodo, resultadosAleatorio, resultadosCrescente, resultadosDecrescente);
+
+                nomeMetodo = "InsercaoDireta";
+                insercaoDireta = new InsercaoDireta(exibirArray, tempoSimulacao);
+
+                insercaoDireta.ordenar(arrayAleatorio.clone());
+                resultadosAleatorio = insercaoDireta.getTrocas() + "/" + insercaoDireta.getComparacoes();
+
+                insercaoDireta.ordenar(arrayCrescente);
+                resultadosCrescente = insercaoDireta.getTrocas() + "/" + insercaoDireta.getComparacoes();
+
+                insercaoDireta.ordenar(arrayDecrescente);
+                resultadosDecrescente = insercaoDireta.getTrocas() + "/" + insercaoDireta.getComparacoes();
+
+                gerarRelatorio(nomeMetodo, resultadosAleatorio, resultadosCrescente, resultadosDecrescente);
+
+                nomeMetodo = "SelecaoDireta";
+                selecaoDireta = new SelecaoDireta(exibirArray, tempoSimulacao);
+
+                selecaoDireta.ordenar(arrayAleatorio.clone());
+                resultadosAleatorio = selecaoDireta.getTrocas() + "/" + selecaoDireta.getComparacoes();
+
+                selecaoDireta.ordenar(arrayCrescente);
+                resultadosCrescente = selecaoDireta.getTrocas() + "/" + selecaoDireta.getComparacoes();
+
+                selecaoDireta.ordenar(arrayDecrescente);
+                resultadosDecrescente = selecaoDireta.getTrocas() + "/" + selecaoDireta.getComparacoes();
+
+                gerarRelatorio(nomeMetodo, resultadosAleatorio, resultadosCrescente, resultadosDecrescente);
+
+                nomeMetodo = "HeapSort";
+                heapSort = new HeapSort(exibirArray, tempoSimulacao);
+
+                heapSort.ordenar(arrayAleatorio.clone());
+                resultadosAleatorio = heapSort.getTrocas() + "/" + heapSort.getComparacoes();
+
+                heapSort.ordenar(arrayCrescente);
+                resultadosCrescente = heapSort.getTrocas() + "/" + heapSort.getComparacoes();
+
+                heapSort.ordenar(arrayDecrescente);
+                resultadosDecrescente = heapSort.getTrocas() + "/" + heapSort.getComparacoes();
+
+                gerarRelatorio(nomeMetodo, resultadosAleatorio, resultadosCrescente, resultadosDecrescente);
+
+                nomeMetodo = "QuickSort";
+                quickSort = new QuickSort(exibirArray, tempoSimulacao);
+
+                quickSort.ordenar(arrayAleatorio.clone());
+                resultadosAleatorio = quickSort.getTrocas() + "/" + quickSort.getComparacoes();
+
+                quickSort.ordenar(arrayCrescente);
+                resultadosCrescente = quickSort.getTrocas() + "/" + quickSort.getComparacoes();
+
+                quickSort.ordenar(arrayDecrescente);
+                resultadosDecrescente = quickSort.getTrocas() + "/" + quickSort.getComparacoes();
+
+                gerarRelatorio(nomeMetodo, resultadosAleatorio, resultadosCrescente, resultadosDecrescente);
+
+                nomeMetodo = "MergeSort";
+                mergeSort = new MergeSort(exibirArray, tempoSimulacao);
+
+                mergeSort.ordenar(arrayAleatorio.clone());
+                resultadosAleatorio = mergeSort.getTrocas() + "/" + mergeSort.getComparacoes();
+
+                mergeSort.ordenar(arrayCrescente);
+                resultadosCrescente = mergeSort.getTrocas() + "/" + mergeSort.getComparacoes();
+
+                mergeSort.ordenar(arrayDecrescente);
+                resultadosDecrescente = mergeSort.getTrocas() + "/" + mergeSort.getComparacoes();
+
+                gerarRelatorio(nomeMetodo, resultadosAleatorio, resultadosCrescente, resultadosDecrescente);
+
+                nomeMetodo = "ShellSort";
+                shellSort = new ShellSort(exibirArray, tempoSimulacao);
+
+                shellSort.ordenar(arrayAleatorio.clone());
+                resultadosAleatorio = shellSort.getTrocas() + "/" + shellSort.getComparacoes();
+
+                shellSort.ordenar(arrayCrescente);
+                resultadosCrescente = shellSort.getTrocas() + "/" + shellSort.getComparacoes();
+
+                shellSort.ordenar(arrayDecrescente);
+                resultadosDecrescente = shellSort.getTrocas() + "/" + shellSort.getComparacoes();
+                break;
 
             default:
                 System.out.println("Método de ordenação inválido!");
@@ -296,6 +396,7 @@ public class Aplicacao {
             if (file.length() == 0) { // Se o arquivo estiver vazio, adiciona o cabeçalho
                 writer.write("método;aleatório;crescente;decrescente\n");
             }
+            // Escreve o conteúdo com uma nova linha no final
             writer.write(nomeMetodo + ";" + resultadosAleatorio + ";" + resultadosCrescente + ";"
                     + resultadosDecrescente + "\n");
         } catch (IOException e) {
