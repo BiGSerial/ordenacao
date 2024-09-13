@@ -23,7 +23,7 @@ public class QuickSort {
     }
 
     private void quickSort(int[] array, int low, int high) {
-        // Contando uma comparação para a verificação do limite low < high
+       
         comparacoes++;
         if (low < high) {
             int pi = partition(array, low, high);
@@ -38,30 +38,30 @@ public class QuickSort {
         int j = low;
 
         while (j < high) {
-            comparacoes++; // Contando a comparação feita no while (j < high)
+           
 
             // Atualiza o estado (mostrar ou não o array)
             ConsoleUtils.mostrarEstado("Quick Sort", array, trocas, comparacoes, j, i, mostrarArray, tempoSimulacao);
 
-            comparacoes++; // Contando a comparação array[j] < pivot
+            comparacoes++;
             if (array[j] < pivot) {
                 i++;
-                if (i != j) { // Só conta como troca se i e j forem diferentes
+                if (i != j) {
                     int temp = array[i];
                     array[i] = array[j];
                     array[j] = temp;
-                    trocas++; // Contando a troca real
+                    trocas++;
                 }
             }
             j++;
         }
 
-        // Troca o pivô para a posição correta
-        if (i + 1 != high) { // Só conta a troca se i + 1 e high forem diferentes
+        
+        if (i + 1 != high) { 
             int temp = array[i + 1];
             array[i + 1] = array[high];
             array[high] = temp;
-            trocas++; // Contando a troca do pivô
+            trocas++; 
         }
         return i + 1;
     }

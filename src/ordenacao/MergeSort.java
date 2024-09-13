@@ -41,13 +41,17 @@ public class MergeSort {
         int i = 0, j = 0, k = left;
 
         while (i < n1) {
+            comparacoes++;
             L[i] = array[left + i];
             i++;
+            trocas++;
         }
 
         while (j < n2) {
+            comparacoes++;
             R[j] = array[middle + 1 + j];
             j++;
+            trocas++;
         }
 
         i = 0;
@@ -62,23 +66,29 @@ public class MergeSort {
             if (L[i] <= R[j]) {
                 array[k] = L[i];
                 i++;
+                trocas++;
             } else {
                 array[k] = R[j];
                 j++;
+                trocas++;
             }
             k++;
         }
 
         while (i < n1) {
+            comparacoes++;
             array[k] = L[i];
             i++;
             k++;
+            trocas++;
         }
 
         while (j < n2) {
+            comparacoes++;
             array[k] = R[j];
             j++;
             k++;
+            trocas++;
         }
     }
 

@@ -32,26 +32,27 @@ public class ShellSort {
                 ConsoleUtils.mostrarEstado("Shell Sort", array, trocas, comparacoes, j, j - gap, mostrarArray,
                         tempoSimulacao);
 
-                // Contamos a comparação sempre que verificamos a condição do while
+               
                 while (j >= gap) {
-                    comparacoes++; // Contando a comparação j >= gap
+                    comparacoes++; 
                     if (array[j - gap] > temp) {
-                        comparacoes++; // Contando a comparação array[j - gap] > temp
+                       
                         array[j] = array[j - gap];
                         j -= gap;
-                        trocas++; // Contando a troca
+                        trocas++; 
+
                     } else {
-                        break; // Se não houver troca, saímos do loop
+                        break; 
                     }
                 }
 
-                // Colocamos o valor de temp na posição correta, mas não contamos isso como
-                // troca
+               
                 array[j] = temp;
                 trocas++;
 
                 i++;
             }
+            
             gap /= 2;
         }
         return array;

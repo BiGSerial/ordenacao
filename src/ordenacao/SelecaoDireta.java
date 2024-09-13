@@ -24,11 +24,12 @@ public class SelecaoDireta {
             int minIndex = i;
             int j = i + 1;
             while (j < array.length) {
-                comparacoes++;
+               
 
                 // Atualiza o estado (mostrar ou não o array)
                 ConsoleUtils.mostrarEstado("Seleção Direta", array, trocas, comparacoes, j, minIndex, mostrarArray, tempoSimulacao);
 
+                comparacoes++;
                 if (array[j] < array[minIndex]) {
                     minIndex = j;
                 }

@@ -26,13 +26,14 @@ public class BubbleSort {
             houveTroca = false;
             int j = 0;
             while (j < n - i - 1) {
-                comparacoes++;
+               
 
                 if (mostrarArray) {
                     ConsoleUtils.mostrarEstado("Bubble Sort", array, trocas, comparacoes, j, j + 1, mostrarArray,
                             tempoSimulacao);
                 }
 
+                comparacoes++;
                 if (array[j] > array[j + 1]) {
                     int temp = array[j];
                     array[j] = array[j + 1];
