@@ -1,0 +1,18 @@
+# Ignore arquivos de compilação e binários
+/bin/
+*.class
+*.jar
+
+# Ignore diretórios de build e libs
+/lib/
+*.log
+
+# Ignore arquivos de relatório
+/relatorios/
+
+# Arquivos temporários do sistema
+.DS_Store
+Thumbs.db
+
+# Arquivos gerados pelo próprio Git
+.git/
