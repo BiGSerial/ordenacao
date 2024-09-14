@@ -17,6 +17,4 @@ Thumbs.db
 # Arquivos gerados pelo próprio Git
 .git/
 
-aleatorio.txt
-crescente.txt
-decrescente.txt
+*.txt
