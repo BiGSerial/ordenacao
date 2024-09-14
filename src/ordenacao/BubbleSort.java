@@ -18,35 +18,32 @@ public class BubbleSort {
         trocas = 0;
         comparacoes = 0;
 
-        int n = array.length;
-        boolean houveTroca;
-        int i = 0;
+        int n = array.length - 1;
+        int i, j, temp;
 
-        while (i < n - 1) {
-            houveTroca = false;
-            int j = 0;
-            while (j < n - i - 1) {
-               
+        do {
+            i = 0;
 
-                if (mostrarArray) {
-                    ConsoleUtils.mostrarEstado("Bubble Sort", array, trocas, comparacoes, j, j + 1, mostrarArray,
-                            tempoSimulacao);
-                }
-
+            for (j = 0; j < n; j++) {
                 comparacoes++;
+
+                ConsoleUtils.mostrarEstado("Bubble Sort", array, trocas, comparacoes, j + 1, j, mostrarArray,
+                        tempoSimulacao);
+
                 if (array[j] > array[j + 1]) {
-                    int temp = array[j];
+                    temp = array[j];
                     array[j] = array[j + 1];
                     array[j + 1] = temp;
+
                     trocas++;
-                    houveTroca = true;
+                    i = j;
                 }
-                j++;
             }
-            if (!houveTroca)
-                break;
-            i++;
-        }
+
+            n = i;
+
+        } while (n >= 1);
+
         return array;
     }
 

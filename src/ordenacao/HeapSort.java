@@ -21,23 +21,19 @@ public class HeapSort {
 
         int n = array.length;
 
-       
         for (int i = n / 2 - 1; i >= 0; i--) {
             heapify(array, n, i);
         }
 
-       
         for (int j = n - 1; j > 0; j--) {
             // Atualiza o estado (mostrar ou não o array)
-            ConsoleUtils.mostrarEstado("Heap Sort", array, trocas, comparacoes, 0, j, mostrarArray, tempoSimulacao);
+            ConsoleUtils.mostrarEstado("Heap Sort", array, trocas, comparacoes, j, 0, mostrarArray, tempoSimulacao);
 
-          
             int temp = array[0];
             array[0] = array[j];
             array[j] = temp;
             trocas++;
 
-           
             heapify(array, j, 0);
         }
 
@@ -49,31 +45,26 @@ public class HeapSort {
         int esquerda = 2 * i + 1;
         int direita = 2 * i + 2;
 
-     
-       
         if (esquerda < n) {
-            comparacoes++; 
+            comparacoes++;
             if (array[esquerda] > array[maior]) {
                 maior = esquerda;
             }
         }
 
-        
         if (direita < n) {
-            comparacoes++; 
+            comparacoes++;
             if (array[direita] > array[maior]) {
                 maior = direita;
             }
         }
 
-       
         if (maior != i) {
             int temp = array[i];
             array[i] = array[maior];
             array[maior] = temp;
             trocas++;
 
-           
             heapify(array, n, maior);
         }
     }

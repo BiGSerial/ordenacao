@@ -19,42 +19,41 @@ public class ShellSort {
         trocas = 0;
         comparacoes = 0;
 
-        int n = array.length;
-        int gap = n / 2;
+        int h = 1;
+        int temp;
+        int i, j;
 
-        while (gap > 0) {
-            int i = gap;
-            while (i < n) {
-                int temp = array[i];
-                int j = i;
+        do {
+            h = 3 * h + 1;
+        } while (h < array.length);
+
+        do {
+            h = h / 3;
+            for (i = h; i < array.length; i++) {
+                temp = array[i];
+                j = i;
 
                 // Atualiza o estado (mostrar ou não o array)
-                ConsoleUtils.mostrarEstado("Shell Sort", array, trocas, comparacoes, j, j - gap, mostrarArray,
+                ConsoleUtils.mostrarEstado("Shell Sort", array, trocas, comparacoes, (j - h), j, mostrarArray,
                         tempoSimulacao);
 
-               
-                while (j >= gap) {
-                    comparacoes++; 
-                    if (array[j - gap] > temp) {
-                       
-                        array[j] = array[j - gap];
-                        j -= gap;
-                        trocas++; 
+                comparacoes++;
+                while (j >= h && array[j - h] > temp) {
+                    comparacoes++;
+                    array[j] = array[j - h];
+                    trocas++;
 
-                    } else {
-                        break; 
+                    j -= h;
+
+                    if (j < h) {
+                        break;
                     }
                 }
-
-               
                 array[j] = temp;
-                // trocas++;
-
-                i++;
             }
 
-            gap /= 2;
-        }
+        } while (h != 1);
+
         return array;
     }
 

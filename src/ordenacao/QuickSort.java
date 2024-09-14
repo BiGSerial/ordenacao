@@ -9,7 +9,6 @@ public class QuickSort {
     private boolean mostrarArray;
     private int tempoSimulacao;
 
-    // Construtor para definir se o array será mostrado ou não
     public QuickSort(boolean mostrarArray, int tempoSimulacao) {
         this.mostrarArray = mostrarArray;
         this.tempoSimulacao = tempoSimulacao;
@@ -22,48 +21,49 @@ public class QuickSort {
         return array;
     }
 
-    private void quickSort(int[] array, int low, int high) {
-       
-       //comparacoes++;
-        if (low < high) {
-            int pi = partition(array, low, high);
-            quickSort(array, low, pi - 1);
-            quickSort(array, pi + 1, high);
-        }
-    }
+    private void quickSort(int[] array, int esq, int dir) {
 
-    private int partition(int[] array, int low, int high) {
-        int pivot = array[high];
-        int i = low - 1;
-        int j = low;
+        int pivo, i = esq, j = dir;
+        int temp;
 
-        while (j < high) {
-           
+        pivo = array[(i + j) / 2];
+
+        do {
 
             // Atualiza o estado (mostrar ou não o array)
             ConsoleUtils.mostrarEstado("Quick Sort", array, trocas, comparacoes, j, i, mostrarArray, tempoSimulacao);
 
             comparacoes++;
-            if (array[j] < pivot) {
+            while (array[i] < pivo) {
                 i++;
-                if (i != j) {
-                    int temp = array[i];
-                    array[i] = array[j];
-                    array[j] = temp;
-                    trocas++;
-                }
+                comparacoes++;
             }
-            j++;
+
+            comparacoes++;
+            while (array[j] > pivo) {
+                j--;
+                comparacoes++;
+            }
+
+            if (i <= j) {
+                temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+                i++;
+                j--;
+                trocas++;
+            }
+
+        } while (i <= j);
+
+        if (esq < j) {
+            quickSort(array, esq, j);
         }
 
-        
-        if (i + 1 != high) { 
-            int temp = array[i + 1];
-            array[i + 1] = array[high];
-            array[high] = temp;
-            trocas++; 
+        if (dir > i) {
+            quickSort(array, i, dir);
         }
-        return i + 1;
+
     }
 
     public int getTrocas() {

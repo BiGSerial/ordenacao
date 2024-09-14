@@ -7,7 +7,7 @@ public class SelecaoDireta {
     private int trocas = 0;
     private int comparacoes = 0;
     private boolean mostrarArray;
-    private int tempoSimulacao;
+    private int tempoSimulacao, temp;
 
     // Construtor para definir se o array será mostrado ou não
     public SelecaoDireta(boolean mostrarArray, int tempoSimulacao) {
@@ -19,30 +19,28 @@ public class SelecaoDireta {
         trocas = 0;
         comparacoes = 0;
 
-        int i = 0;
-        while (i < array.length - 1) {
+        for (int i = 0; i < array.length - 1; i++) {
             int minIndex = i;
-            int j = i + 1;
-            while (j < array.length) {
-               
+
+            for (int j = i + 1; j < array.length; j++) {
 
                 // Atualiza o estado (mostrar ou não o array)
-                ConsoleUtils.mostrarEstado("Seleção Direta", array, trocas, comparacoes, j, minIndex, mostrarArray, tempoSimulacao);
+                ConsoleUtils.mostrarEstado("Seleção Direta", array, trocas, comparacoes, j, minIndex, mostrarArray,
+                        tempoSimulacao);
 
                 comparacoes++;
                 if (array[j] < array[minIndex]) {
                     minIndex = j;
                 }
-                j++;
             }
-            if (minIndex != i) {
-                int temp = array[minIndex];
-                array[minIndex] = array[i];
-                array[i] = temp;
-                trocas++;
-            }
-            i++;
+
+            temp = array[minIndex];
+            array[minIndex] = array[i];
+            array[i] = temp;
+            trocas++;
+
         }
+
         return array;
     }
 

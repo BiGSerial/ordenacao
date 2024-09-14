@@ -22,50 +22,64 @@ public class ShakeSort {
     }
 
     private void shakeSort(int[] array) {
-        boolean trocou = true;
-        int inicio = 0;
-        int fim = array.length - 1;
+        int esq = 0;
+        int dir = array.length - 1;
+        int j = dir;
+        int read, temp;
+        int i;
 
-        while (trocou) {
-            trocou = false;
-            
-            for (int i = inicio; i < fim; i++) {
+        do {
+
+            for (i = dir; i > esq; i--) {
                 comparacoes++;
-                ConsoleUtils.mostrarEstado("Shake Sort", array, trocas, comparacoes, i, -1, mostrarArray, tempoSimulacao);
-                
-                if (array[i] > array[i + 1]) {
-                    int temp = array[i];
-                    array[i] = array[i + 1];
-                    array[i + 1] = temp;
-                    
-                    trocas++;
-                    trocou = true;
+
+                // Para evitar que a Leitura fique fora dos Indices, nao faz parte da ordenação!
+                if (i > 0) {
+                    read = i - 1;
+                } else {
+                    read = i;
                 }
-            }
 
-            if (!trocou) {
-                break;
-            }
+                // Animação da leitura do array (atualiza o estado para visualização)
+                ConsoleUtils.mostrarEstado("Shake Sort <<", array, trocas, comparacoes, read, i, mostrarArray,
+                        tempoSimulacao);
 
-            fim--;
-            trocou = false;
-
-            for (int i = fim; i > inicio; i--) {
-                comparacoes++;
-                ConsoleUtils.mostrarEstado("Shake Sort", array, trocas, comparacoes, i, -1, mostrarArray, tempoSimulacao);
-                
-                if (array[i] < array[i - 1]) {
-                    int temp = array[i];
+                if (array[i - 1] > array[i]) {
+                    temp = array[i];
                     array[i] = array[i - 1];
                     array[i - 1] = temp;
-                    
+
                     trocas++;
-                    trocou = true;
+                    j = i;
                 }
             }
+            esq = j;
 
-            inicio++;
-        }
+            for (i = esq; i < dir; i++) {
+                comparacoes++;
+
+                // Para evitar que a Leitura fique fora dos Indices, nao faz parte da ordenação!
+                if (i < dir) {
+                    read = i + 1;
+                } else {
+                    read = i;
+                }
+
+                // Animação da leitura do array (atualiza o estado para visualização)
+                ConsoleUtils.mostrarEstado("Shake Sort >>", array, trocas, comparacoes, read, i, mostrarArray,
+                        tempoSimulacao);
+
+                if (array[i] > array[i + 1]) {
+                    temp = array[i];
+                    array[i] = array[i + 1];
+                    array[i + 1] = temp;
+
+                    trocas++;
+                    j = i + 1;
+                }
+            }
+            dir = j - 1;
+        } while (esq <= dir);
     }
 
     public int getTrocas() {

@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 
 public class Aplicacao {
 
-    private static int tempoSimulacao = 10; // Tempo padrão (em ms)
+    private static int tempoSimulacao = 1; // Tempo padrão (em ms)
     private static boolean exibirArray = true; // Exibir array (padrão: não)
     private static int quantidadeRegistros = 0; // Quantidade de registros
     private static Scanner scanner = new Scanner(System.in); // Scanner global
@@ -135,7 +135,8 @@ public class Aplicacao {
                 InsercaoDireta insercaoDireta = new InsercaoDireta(exibirArray, tempoSimulacao);
 
                 // insercaoDireta.ordenar(arrayAleatorio.clone());
-                // resultadosAleatorio = insercaoDireta.getTrocas() + "/" + insercaoDireta.getComparacoes();
+                // resultadosAleatorio = insercaoDireta.getTrocas() + "/" +
+                // insercaoDireta.getComparacoes();
 
                 insercaoDireta.ordenar(arrayCrescente);
                 resultadosCrescente = insercaoDireta.getTrocas() + "/" + insercaoDireta.getComparacoes();
@@ -325,8 +326,6 @@ public class Aplicacao {
 
                 shellSort.ordenar(arrayDecrescente);
                 resultadosDecrescente = shellSort.getTrocas() + "/" + shellSort.getComparacoes();
-
-
 
                 nomeMetodo = "ShakeSort";
                 shakesort = new ShakeSort(exibirArray, tempoSimulacao);
