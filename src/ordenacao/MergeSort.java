@@ -2,7 +2,7 @@ package ordenacao;
 
 import utils.ConsoleUtils;
 
-public class MergeSort {
+public class MergeSort implements Sorter {
 
     private int trocas = 0;
     private int comparacoes = 0;
@@ -15,11 +15,12 @@ public class MergeSort {
         this.tempoSimulacao = tempoSimulacao;
     }
 
-    public int[] ordenar(int[] array) {
+    @Override
+    public void ordenar(int[] array) {
         trocas = 0;
         comparacoes = 0;
         mergeSort(array, 0, array.length - 1);
-        return array;
+
     }
 
     private void mergeSort(int[] array, int left, int right) {
@@ -92,10 +93,12 @@ public class MergeSort {
         }
     }
 
+    @Override
     public int getTrocas() {
         return trocas;
     }
 
+    @Override
     public int getComparacoes() {
         return comparacoes;
     }

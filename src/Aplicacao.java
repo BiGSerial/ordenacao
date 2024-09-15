@@ -7,20 +7,22 @@ import java.text.SimpleDateFormat;
 public class Aplicacao {
 
     private static int tempoSimulacao = 1; // Tempo padrão (em ms)
-    private static boolean exibirArray = true; // Exibir array (padrão: não)
+    private static boolean exibirArray = true, sel = true; // Exibir array (padrão: não)
     private static int quantidadeRegistros = 0; // Quantidade de registros
     private static Scanner scanner = new Scanner(System.in); // Scanner global
     private static String arquivoRelatorioAtual = null; // Caminho do arquivo de relatório atual
     private static boolean cabecalhoEscrito = false; // Controla se o cabeçalho já foi escrito
 
     public static void main(String[] args) {
-        while (true) {
-            exibirMenuPrincipal();
+        while (sel == true) {
+            sel = exibirMenuPrincipal();
         }
+
     }
 
     private static boolean exibirMenuPrincipal() {
         ConsoleUtils.clearConsole();
+        System.out.println("ORDENATOR v1.0.2 - Will Oliveira - FAESA \n Prof. Renata Laranja \n\n");
         System.out.println("=== MENU PRINCIPAL ===");
         System.out.println("1 - Nova Ordenação");
         System.out.println("2 - Exibir Resultados");
@@ -41,6 +43,7 @@ public class Aplicacao {
                 configuracoes();
                 return true;
             case 0:
+                System.out.println("Obrigado por Usar...");
                 return false; // Sai do loop e encerra o programa.
             default:
                 System.out.println("Opção inválida! Tente novamente.");
@@ -78,6 +81,8 @@ public class Aplicacao {
 
     private static boolean exibirMenuOrdenacao() {
         ConsoleUtils.clearConsole();
+        System.out.println("ORDENATOR v1.0.2 - Will Oliveira - FAESA \n Prof. Renata Laranja \n\n");
+        System.out.println("=== MENU ORDENAÇÃO ===");
         System.out.println("Métodos de Ordenação - " + quantidadeRegistros + " Registros\n");
         System.out.println("1 - Bubble Sort");
         System.out.println("2 - Inserção Direta");
@@ -97,258 +102,157 @@ public class Aplicacao {
             return false; // Volta para o menu principal
         }
 
-        executarOrdenacao(metodo); // Executa a ordenação
+        // Agora, solicitar os tipos de dados
+        List<Integer> dataTypes = exibirMenuTipoDados();
+        if (dataTypes.isEmpty()) {
+            System.out.println("Nenhum tipo de dado selecionado!");
+            ConsoleUtils.pauseConsole();
+            return true;
+        }
+
+        executarOrdenacao(metodo, dataTypes); // Executa a ordenação
         return true; // Continua no menu de ordenação
     }
 
-    private static void executarOrdenacao(int metodo) {
+    private static List<Integer> exibirMenuTipoDados() {
+        ConsoleUtils.clearConsole();
+        System.out.println("ORDENATOR v1.0.2 - Will Oliveira - FAESA \n Prof. Renata Laranja \n\n");
+        System.out.println("=== TIPO DE DADOS ===");
+        System.out.println("Selecione os tipos de dados para ordenar:\n");
+        System.out.println("1 - Aleatórios");
+        System.out.println("2 - Crescente");
+        System.out.println("3 - Decrescente");
+        System.out.println("4 - Todos");
+        System.out.println("0 - Concluir seleção");
+
+        Set<Integer> dataTypes = new HashSet<>();
+        while (true) {
+            System.out.print("\nEscolha uma opção: ");
+            int opcao = scanner.nextInt();
+            if (opcao == 0) {
+                break;
+            } else if (opcao >= 1 && opcao <= 3) {
+                if (!dataTypes.contains(opcao)) {
+                    dataTypes.add(opcao);
+                } else {
+                    System.out.println("Tipo já selecionado.");
+                }
+            } else if (opcao == 4) {
+                dataTypes.add(1);
+                dataTypes.add(2);
+                dataTypes.add(3);
+                break;
+            } else {
+                System.out.println("Opção inválida!");
+            }
+        }
+
+        return new ArrayList<>(dataTypes);
+    }
+
+    private static void executarOrdenacao(int metodo, List<Integer> dataTypes) {
         ConsoleUtils.clearConsole();
         System.out.println("Executando ordenação...\n");
 
-        // Carregando os arquivos
-        int[] arrayAleatorio = carregarArquivo("aleatorios.txt");
-        int[] arrayCrescente = carregarArquivo("crescente.txt");
-        int[] arrayDecrescente = carregarArquivo("decrescente.txt");
-
-        String nomeMetodo = "";
-        String resultadosAleatorio = "";
-        String resultadosCrescente = "";
-        String resultadosDecrescente = "";
-
-        switch (metodo) {
-            case 1:
-                nomeMetodo = "BubbleSort";
-                BubbleSort bubbleSort = new BubbleSort(exibirArray, tempoSimulacao);
-
-                bubbleSort.ordenar(arrayAleatorio.clone());
-                resultadosAleatorio = bubbleSort.getTrocas() + "/" + bubbleSort.getComparacoes();
-
-                bubbleSort.ordenar(arrayCrescente);
-                resultadosCrescente = bubbleSort.getTrocas() + "/" + bubbleSort.getComparacoes();
-
-                bubbleSort.ordenar(arrayDecrescente);
-                resultadosDecrescente = bubbleSort.getTrocas() + "/" + bubbleSort.getComparacoes();
-                break;
-
-            case 2:
-                nomeMetodo = "InsercaoDireta";
-                InsercaoDireta insercaoDireta = new InsercaoDireta(exibirArray, tempoSimulacao);
-
-                // insercaoDireta.ordenar(arrayAleatorio.clone());
-                // resultadosAleatorio = insercaoDireta.getTrocas() + "/" +
-                // insercaoDireta.getComparacoes();
-
-                insercaoDireta.ordenar(arrayCrescente);
-                resultadosCrescente = insercaoDireta.getTrocas() + "/" + insercaoDireta.getComparacoes();
-
-                insercaoDireta.ordenar(arrayDecrescente);
-                resultadosDecrescente = insercaoDireta.getTrocas() + "/" + insercaoDireta.getComparacoes();
-                break;
-
-            case 3:
-                nomeMetodo = "SelecaoDireta";
-                SelecaoDireta selecaoDireta = new SelecaoDireta(exibirArray, tempoSimulacao);
-
-                selecaoDireta.ordenar(arrayAleatorio.clone());
-                resultadosAleatorio = selecaoDireta.getTrocas() + "/" + selecaoDireta.getComparacoes();
-
-                selecaoDireta.ordenar(arrayCrescente);
-                resultadosCrescente = selecaoDireta.getTrocas() + "/" + selecaoDireta.getComparacoes();
-
-                selecaoDireta.ordenar(arrayDecrescente);
-                resultadosDecrescente = selecaoDireta.getTrocas() + "/" + selecaoDireta.getComparacoes();
-                break;
-
-            case 4:
-                nomeMetodo = "HeapSort";
-                HeapSort heapSort = new HeapSort(exibirArray, tempoSimulacao);
-
-                heapSort.ordenar(arrayAleatorio.clone());
-                resultadosAleatorio = heapSort.getTrocas() + "/" + heapSort.getComparacoes();
-
-                heapSort.ordenar(arrayCrescente);
-                resultadosCrescente = heapSort.getTrocas() + "/" + heapSort.getComparacoes();
-
-                heapSort.ordenar(arrayDecrescente);
-                resultadosDecrescente = heapSort.getTrocas() + "/" + heapSort.getComparacoes();
-                break;
-
-            case 5:
-                nomeMetodo = "QuickSort";
-                QuickSort quickSort = new QuickSort(exibirArray, tempoSimulacao);
-
-                quickSort.ordenar(arrayAleatorio.clone());
-                resultadosAleatorio = quickSort.getTrocas() + "/" + quickSort.getComparacoes();
-
-                quickSort.ordenar(arrayCrescente);
-                resultadosCrescente = quickSort.getTrocas() + "/" + quickSort.getComparacoes();
-
-                quickSort.ordenar(arrayDecrescente);
-                resultadosDecrescente = quickSort.getTrocas() + "/" + quickSort.getComparacoes();
-                break;
-
-            case 6:
-                nomeMetodo = "MergeSort";
-                MergeSort mergeSort = new MergeSort(exibirArray, tempoSimulacao);
-
-                mergeSort.ordenar(arrayAleatorio.clone());
-                resultadosAleatorio = mergeSort.getTrocas() + "/" + mergeSort.getComparacoes();
-
-                mergeSort.ordenar(arrayCrescente);
-                resultadosCrescente = mergeSort.getTrocas() + "/" + mergeSort.getComparacoes();
-
-                mergeSort.ordenar(arrayDecrescente);
-                resultadosDecrescente = mergeSort.getTrocas() + "/" + mergeSort.getComparacoes();
-                break;
-
-            case 7:
-                nomeMetodo = "ShellSort";
-                ShellSort shellSort = new ShellSort(exibirArray, tempoSimulacao);
-
-                shellSort.ordenar(arrayAleatorio.clone());
-                resultadosAleatorio = shellSort.getTrocas() + "/" + shellSort.getComparacoes();
-
-                shellSort.ordenar(arrayCrescente);
-                resultadosCrescente = shellSort.getTrocas() + "/" + shellSort.getComparacoes();
-
-                shellSort.ordenar(arrayDecrescente);
-                resultadosDecrescente = shellSort.getTrocas() + "/" + shellSort.getComparacoes();
-                break;
-
-            case 8:
-                nomeMetodo = "ShakeSort";
-                ShakeSort shakesort = new ShakeSort(exibirArray, tempoSimulacao);
-
-                shakesort.ordenar(arrayAleatorio.clone());
-                resultadosAleatorio = shakesort.getTrocas() + "/" + shakesort.getComparacoes();
-
-                shakesort.ordenar(arrayCrescente);
-                resultadosCrescente = shakesort.getTrocas() + "/" + shakesort.getComparacoes();
-
-                shakesort.ordenar(arrayDecrescente);
-                resultadosDecrescente = shakesort.getTrocas() + "/" + shakesort.getComparacoes();
-                break;
-
-            case 9:
-
-                nomeMetodo = "BubbleSort";
-                bubbleSort = new BubbleSort(exibirArray, tempoSimulacao);
-
-                bubbleSort.ordenar(arrayAleatorio.clone());
-                resultadosAleatorio = bubbleSort.getTrocas() + "/" + bubbleSort.getComparacoes();
-
-                bubbleSort.ordenar(arrayCrescente);
-                resultadosCrescente = bubbleSort.getTrocas() + "/" + bubbleSort.getComparacoes();
-
-                bubbleSort.ordenar(arrayDecrescente);
-                resultadosDecrescente = bubbleSort.getTrocas() + "/" + bubbleSort.getComparacoes();
-
-                gerarRelatorio(nomeMetodo, resultadosAleatorio, resultadosCrescente, resultadosDecrescente);
-
-                nomeMetodo = "InsercaoDireta";
-                insercaoDireta = new InsercaoDireta(exibirArray, tempoSimulacao);
-
-                insercaoDireta.ordenar(arrayAleatorio.clone());
-                resultadosAleatorio = insercaoDireta.getTrocas() + "/" + insercaoDireta.getComparacoes();
-
-                insercaoDireta.ordenar(arrayCrescente);
-                resultadosCrescente = insercaoDireta.getTrocas() + "/" + insercaoDireta.getComparacoes();
-
-                insercaoDireta.ordenar(arrayDecrescente);
-                resultadosDecrescente = insercaoDireta.getTrocas() + "/" + insercaoDireta.getComparacoes();
-
-                gerarRelatorio(nomeMetodo, resultadosAleatorio, resultadosCrescente, resultadosDecrescente);
-
-                nomeMetodo = "SelecaoDireta";
-                selecaoDireta = new SelecaoDireta(exibirArray, tempoSimulacao);
-
-                selecaoDireta.ordenar(arrayAleatorio.clone());
-                resultadosAleatorio = selecaoDireta.getTrocas() + "/" + selecaoDireta.getComparacoes();
-
-                selecaoDireta.ordenar(arrayCrescente);
-                resultadosCrescente = selecaoDireta.getTrocas() + "/" + selecaoDireta.getComparacoes();
-
-                selecaoDireta.ordenar(arrayDecrescente);
-                resultadosDecrescente = selecaoDireta.getTrocas() + "/" + selecaoDireta.getComparacoes();
-
-                gerarRelatorio(nomeMetodo, resultadosAleatorio, resultadosCrescente, resultadosDecrescente);
-
-                nomeMetodo = "HeapSort";
-                heapSort = new HeapSort(exibirArray, tempoSimulacao);
-
-                heapSort.ordenar(arrayAleatorio.clone());
-                resultadosAleatorio = heapSort.getTrocas() + "/" + heapSort.getComparacoes();
-
-                heapSort.ordenar(arrayCrescente);
-                resultadosCrescente = heapSort.getTrocas() + "/" + heapSort.getComparacoes();
-
-                heapSort.ordenar(arrayDecrescente);
-                resultadosDecrescente = heapSort.getTrocas() + "/" + heapSort.getComparacoes();
-
-                gerarRelatorio(nomeMetodo, resultadosAleatorio, resultadosCrescente, resultadosDecrescente);
-
-                nomeMetodo = "QuickSort";
-                quickSort = new QuickSort(exibirArray, tempoSimulacao);
-
-                quickSort.ordenar(arrayAleatorio.clone());
-                resultadosAleatorio = quickSort.getTrocas() + "/" + quickSort.getComparacoes();
-
-                quickSort.ordenar(arrayCrescente);
-                resultadosCrescente = quickSort.getTrocas() + "/" + quickSort.getComparacoes();
-
-                quickSort.ordenar(arrayDecrescente);
-                resultadosDecrescente = quickSort.getTrocas() + "/" + quickSort.getComparacoes();
-
-                gerarRelatorio(nomeMetodo, resultadosAleatorio, resultadosCrescente, resultadosDecrescente);
-
-                nomeMetodo = "MergeSort";
-                mergeSort = new MergeSort(exibirArray, tempoSimulacao);
-
-                mergeSort.ordenar(arrayAleatorio.clone());
-                resultadosAleatorio = mergeSort.getTrocas() + "/" + mergeSort.getComparacoes();
-
-                mergeSort.ordenar(arrayCrescente);
-                resultadosCrescente = mergeSort.getTrocas() + "/" + mergeSort.getComparacoes();
-
-                mergeSort.ordenar(arrayDecrescente);
-                resultadosDecrescente = mergeSort.getTrocas() + "/" + mergeSort.getComparacoes();
-
-                gerarRelatorio(nomeMetodo, resultadosAleatorio, resultadosCrescente, resultadosDecrescente);
-
-                nomeMetodo = "ShellSort";
-                shellSort = new ShellSort(exibirArray, tempoSimulacao);
-
-                shellSort.ordenar(arrayAleatorio.clone());
-                resultadosAleatorio = shellSort.getTrocas() + "/" + shellSort.getComparacoes();
-
-                shellSort.ordenar(arrayCrescente);
-                resultadosCrescente = shellSort.getTrocas() + "/" + shellSort.getComparacoes();
-
-                shellSort.ordenar(arrayDecrescente);
-                resultadosDecrescente = shellSort.getTrocas() + "/" + shellSort.getComparacoes();
-
-                nomeMetodo = "ShakeSort";
-                shakesort = new ShakeSort(exibirArray, tempoSimulacao);
-
-                shakesort.ordenar(arrayAleatorio.clone());
-                resultadosAleatorio = shakesort.getTrocas() + "/" + shakesort.getComparacoes();
-
-                shakesort.ordenar(arrayCrescente);
-                resultadosCrescente = shakesort.getTrocas() + "/" + shakesort.getComparacoes();
-
-                shakesort.ordenar(arrayDecrescente);
-                resultadosDecrescente = shakesort.getTrocas() + "/" + shakesort.getComparacoes();
-                break;
-
-            default:
-                System.out.println("Método de ordenação inválido!");
-                return;
+        // Carregando os arquivos selecionados
+        Map<Integer, int[]> dataArrays = new HashMap<>();
+        if (dataTypes.contains(1)) {
+            dataArrays.put(1, carregarArquivo("aleatorios.txt"));
+        }
+        if (dataTypes.contains(2)) {
+            dataArrays.put(2, carregarArquivo("crescente.txt"));
+        }
+        if (dataTypes.contains(3)) {
+            dataArrays.put(3, carregarArquivo("decrescente.txt"));
         }
 
-        // Gerar o relatório com base no nome do método e resultados
-        gerarRelatorio(nomeMetodo, resultadosAleatorio, resultadosCrescente, resultadosDecrescente);
+        if (dataArrays.isEmpty()) {
+            System.out.println("Nenhum tipo de dado selecionado!");
+            ConsoleUtils.pauseConsole();
+            return;
+        }
+
+        if (metodo == 9) {
+            // Loop sobre todos os métodos
+            for (int method = 1; method <= 8; method++) {
+                String nomeMetodo = getNomeMetodo(method);
+                Map<Integer, String> resultados = new HashMap<>();
+
+                for (Integer dataType : dataTypes) {
+                    int[] array = dataArrays.get(dataType);
+                    if (array != null) {
+                        Sorter sorter = getSorter(method); // Cria nova instância do sorter
+                        sorter.ordenar(array.clone());
+                        resultados.put(dataType, sorter.getTrocas() + "/" + sorter.getComparacoes());
+                    }
+                }
+
+                // Gerar relatório para este método
+                gerarRelatorio(nomeMetodo, resultados);
+            }
+        } else {
+            String nomeMetodo = getNomeMetodo(metodo);
+            Map<Integer, String> resultados = new HashMap<>();
+
+            for (Integer dataType : dataTypes) {
+                int[] array = dataArrays.get(dataType);
+                if (array != null) {
+                    Sorter sorter = getSorter(metodo); // Cria nova instância do sorter
+                    sorter.ordenar(array.clone());
+                    resultados.put(dataType, sorter.getTrocas() + "/" + sorter.getComparacoes());
+                }
+            }
+
+            gerarRelatorio(nomeMetodo, resultados);
+        }
 
         ConsoleUtils.pauseConsole();
+    }
+
+    private static Sorter getSorter(int metodo) {
+        switch (metodo) {
+            case 1:
+                return new BubbleSort(exibirArray, tempoSimulacao);
+            case 2:
+                return new InsercaoDireta(exibirArray, tempoSimulacao);
+            case 3:
+                return new SelecaoDireta(exibirArray, tempoSimulacao);
+            case 4:
+                return new HeapSort(exibirArray, tempoSimulacao);
+            case 5:
+                return new QuickSort(exibirArray, tempoSimulacao);
+            case 6:
+                return new MergeSort(exibirArray, tempoSimulacao);
+            case 7:
+                return new ShellSort(exibirArray, tempoSimulacao);
+            case 8:
+                return new ShakeSort(exibirArray, tempoSimulacao);
+            default:
+                return null;
+        }
+    }
+
+    private static String getNomeMetodo(int metodo) {
+        switch (metodo) {
+            case 1:
+                return "BubbleSort";
+            case 2:
+                return "InsercaoDireta";
+            case 3:
+                return "SelecaoDireta";
+            case 4:
+                return "HeapSort";
+            case 5:
+                return "QuickSort";
+            case 6:
+                return "MergeSort";
+            case 7:
+                return "ShellSort";
+            case 8:
+                return "ShakeSort";
+            default:
+                return "Desconhecido";
+        }
     }
 
     // Método para carregar o arquivo em um array de inteiros
@@ -410,8 +314,7 @@ public class Aplicacao {
         }
     }
 
-    private static void gerarRelatorio(String nomeMetodo, String resultadosAleatorio, String resultadosCrescente,
-            String resultadosDecrescente) {
+    private static void gerarRelatorio(String nomeMetodo, Map<Integer, String> resultados) {
         // Verifica se o arquivo de relatório atual foi definido
         if (arquivoRelatorioAtual == null) {
             System.out.println("Nenhum arquivo de relatório foi criado ainda.");
@@ -420,14 +323,20 @@ public class Aplicacao {
 
         File file = new File(arquivoRelatorioAtual);
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) { // Adiciona conteúdo ao arquivo
-                                                                                       // existente
-            if (file.length() == 0) { // Se o arquivo estiver vazio, adiciona o cabeçalho
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
+            if (file.length() == 0) {
+                // Escrever o cabeçalho
                 writer.write("método;aleatório;crescente;decrescente\n");
             }
-            // Escreve o conteúdo com uma nova linha no final
-            writer.write(nomeMetodo + ";" + resultadosAleatorio + ";" + resultadosCrescente + ";"
-                    + resultadosDecrescente + "\n");
+
+            // Escreve o conteúdo
+            writer.write(nomeMetodo + ";");
+
+            String resAleatorio = resultados.getOrDefault(1, "-");
+            String resCrescente = resultados.getOrDefault(2, "-");
+            String resDecrescente = resultados.getOrDefault(3, "-");
+
+            writer.write(resAleatorio + ";" + resCrescente + ";" + resDecrescente + "\n");
         } catch (IOException e) {
             System.out.println("Erro ao gerar o relatório.");
             e.printStackTrace();

@@ -2,7 +2,7 @@ package ordenacao;
 
 import utils.ConsoleUtils;
 
-public class BubbleSort {
+public class BubbleSort implements Sorter {
 
     private int trocas = 0;
     private int comparacoes = 0;
@@ -14,7 +14,8 @@ public class BubbleSort {
         this.tempoSimulacao = tempoSimulacao;
     }
 
-    public int[] ordenar(int[] array) {
+    @Override
+    public void ordenar(int[] array) {
         trocas = 0;
         comparacoes = 0;
 
@@ -44,13 +45,14 @@ public class BubbleSort {
 
         } while (n >= 1);
 
-        return array;
     }
 
+    @Override
     public int getTrocas() {
         return trocas;
     }
 
+    @Override
     public int getComparacoes() {
         return comparacoes;
     }

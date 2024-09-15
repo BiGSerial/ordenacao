@@ -2,7 +2,7 @@ package ordenacao;
 
 import utils.ConsoleUtils;
 
-public class QuickSort {
+public class QuickSort implements Sorter {
 
     private int trocas = 0;
     private int comparacoes = 0;
@@ -14,11 +14,12 @@ public class QuickSort {
         this.tempoSimulacao = tempoSimulacao;
     }
 
-    public int[] ordenar(int[] array) {
+    @Override
+    public void ordenar(int[] array) {
         trocas = 0;
         comparacoes = 0;
         quickSort(array, 0, array.length - 1);
-        return array;
+
     }
 
     private void quickSort(int[] array, int esq, int dir) {
@@ -66,10 +67,12 @@ public class QuickSort {
 
     }
 
+    @Override
     public int getTrocas() {
         return trocas;
     }
 
+    @Override
     public int getComparacoes() {
         return comparacoes;
     }

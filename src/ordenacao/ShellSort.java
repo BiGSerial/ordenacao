@@ -2,7 +2,7 @@ package ordenacao;
 
 import utils.ConsoleUtils;
 
-public class ShellSort {
+public class ShellSort implements Sorter {
 
     private int trocas = 0;
     private int comparacoes = 0;
@@ -15,7 +15,8 @@ public class ShellSort {
         this.tempoSimulacao = tempoSimulacao;
     }
 
-    public int[] ordenar(int[] array) {
+    @Override
+    public void ordenar(int[] array) {
         trocas = 0;
         comparacoes = 0;
 
@@ -54,13 +55,14 @@ public class ShellSort {
 
         } while (h != 1);
 
-        return array;
     }
 
+    @Override
     public int getTrocas() {
         return trocas;
     }
 
+    @Override
     public int getComparacoes() {
         return comparacoes;
     }
