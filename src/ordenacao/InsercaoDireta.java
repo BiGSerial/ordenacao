@@ -29,6 +29,7 @@ public class InsercaoDireta implements Sorter {
             ConsoleUtils.mostrarEstado("Inserção Direta", array, trocas, comparacoes, i, j, mostrarArray,
                     tempoSimulacao);
 
+            comparacoes++;
             while (j >= 0 && array[j] > chave) {
                 comparacoes++;
                 array[j + 1] = array[j];
