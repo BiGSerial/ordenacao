@@ -6,12 +6,14 @@ import java.text.SimpleDateFormat;
 
 public class Aplicacao {
 
+    private static String title = "ORDENATOR v1.0.3 - Will Oliveira - FAESA \n Prof. Renata Laranja \n\n";
+
     private static int tempoSimulacao = 1; // Tempo padrão (em ms)
     private static boolean exibirArray = true, sel = true; // Exibir array (padrão: não)
     private static int quantidadeRegistros = 0; // Quantidade de registros
     private static Scanner scanner = new Scanner(System.in); // Scanner global
     private static String arquivoRelatorioAtual = null; // Caminho do arquivo de relatório atual
-    private static boolean cabecalhoEscrito = false; // Controla se o cabeçalho já foi escrito
+    private static boolean cabecalhoEscrito = false;
 
     public static void main(String[] args) {
         while (sel == true) {
@@ -22,7 +24,7 @@ public class Aplicacao {
 
     private static boolean exibirMenuPrincipal() {
         ConsoleUtils.clearConsole();
-        System.out.println("ORDENATOR v1.0.2 - Will Oliveira - FAESA \n Prof. Renata Laranja \n\n");
+        System.out.println(title);
         System.out.println("=== MENU PRINCIPAL ===");
         System.out.println("1 - Nova Ordenação");
         System.out.println("2 - Exibir Resultados");
@@ -81,7 +83,7 @@ public class Aplicacao {
 
     private static boolean exibirMenuOrdenacao() {
         ConsoleUtils.clearConsole();
-        System.out.println("ORDENATOR v1.0.2 - Will Oliveira - FAESA \n Prof. Renata Laranja \n\n");
+        System.out.println(title);
         System.out.println("=== MENU ORDENAÇÃO ===");
         System.out.println("Métodos de Ordenação - " + quantidadeRegistros + " Registros\n");
         System.out.println("1 - Bubble Sort");
@@ -116,7 +118,7 @@ public class Aplicacao {
 
     private static List<Integer> exibirMenuTipoDados() {
         ConsoleUtils.clearConsole();
-        System.out.println("ORDENATOR v1.0.2 - Will Oliveira - FAESA \n Prof. Renata Laranja \n\n");
+        System.out.println(title);
         System.out.println("=== TIPO DE DADOS ===");
         System.out.println("Selecione os tipos de dados para ordenar:\n");
         System.out.println("1 - Aleatórios");
